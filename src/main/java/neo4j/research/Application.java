@@ -2,6 +2,7 @@ package neo4j.research;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -16,9 +17,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.data.neo4j.core.GraphDatabase;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 
-import neo4j.research.model.Article;
-import neo4j.research.model.Author;
+import neo4j.research.nodes.Article;
+import neo4j.research.nodes.Author;
+import neo4j.research.relations.ArticleOwner;
 import neo4j.research.repository.ArticleRepository;
 import neo4j.research.repository.AuthorRepository;
 
@@ -47,6 +50,9 @@ public class Application extends Neo4jConfiguration implements CommandLineRunner
 	@Autowired
 	GraphDatabase graphDatabase;
 
+	@Autowired
+	private Neo4jTemplate template;
+
 	public void run(String... args) throws Exception {
 		Author ronneberg = new Author("Kristoffer ", "Rønneberg");
 		Author sarah = new Author("Sarah", "Trine");
@@ -63,8 +69,8 @@ public class Application extends Neo4jConfiguration implements CommandLineRunner
 			authorRepository.save(ronneberg);
 			authorRepository.save(sarah);
 
-			ronneberg = addArticlesToAuthor(ronneberg, ronnebergArticles);
-			sarah = addArticlesToAuthor(sarah, sarahArticles);
+			addArticlesToAuthor(ronneberg, ronnebergArticles);
+			addArticlesToAuthor(sarah, sarahArticles);
 
 			Article related1 = ronnebergArticles.get(0);
 			Article related2 = ronnebergArticles.get(1);
@@ -82,13 +88,13 @@ public class Application extends Neo4jConfiguration implements CommandLineRunner
 
 	}
 
-	private Author addArticlesToAuthor(Author author, List<Article> articles) {
+	private void addArticlesToAuthor(Author author, List<Article> articles) {
 		author = authorRepository.findByName(author.name);
 		for (Article sarahArticle : articles) {
-			author.owner(sarahArticle);
+			sarahArticle = articleRepository.save(sarahArticle);
+			ArticleOwner articleOwner = new ArticleOwner(new Date(), author, sarahArticle);
+			template.save(articleOwner);
 		}
-		authorRepository.save(author);
-		return author;
 	}
 
 	public static void main(String[] args) throws Exception {

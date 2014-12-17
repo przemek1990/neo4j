@@ -1,4 +1,4 @@
-package neo4j.research.model;
+package neo4j.research.nodes;
 
 import java.util.HashSet;
 import java.util.Set;
