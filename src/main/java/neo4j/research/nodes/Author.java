@@ -25,9 +25,8 @@ public class Author {
 	}
 
 	@RelatedTo(type = "OWNER", direction = Direction.OUTGOING)
-	public
 	@Fetch
-	Set<Article> articles;
+	public Set<Article> articles;
 
 	public void owner(Article article) {
 		if (articles == null) {

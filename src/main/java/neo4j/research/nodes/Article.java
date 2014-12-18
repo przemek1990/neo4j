@@ -26,9 +26,8 @@ public class Article {
 	}
 
 	@RelatedTo(type = "REALATED", direction = Direction.BOTH)
-	public
 	@Fetch
-	Set<Article> relatedArticles;
+	public Set<Article> relatedArticles;
 
 
 	public void related(Article article) {
