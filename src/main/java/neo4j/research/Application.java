@@ -81,7 +81,7 @@ public class Application extends Neo4jConfiguration implements CommandLineRunner
 			articleRepository.save(Arrays.asList(related1, sarahRelated));
 
 			System.out.println("Lookup each person by name...");
-			Arrays.asList(ronneberg.name, sarah.name).forEach((name) -> System.out.println(authorRepository.findByName(name)));
+			Arrays.asList(ronneberg.getName(), sarah.getName()).forEach((name) -> System.out.println(authorRepository.findByName(name)));
 
 			tx.success();
 		}
@@ -89,7 +89,7 @@ public class Application extends Neo4jConfiguration implements CommandLineRunner
 	}
 
 	private void addArticlesToAuthor(Author author, List<Article> articles) {
-		author = authorRepository.findByName(author.name);
+		author = authorRepository.findByName(author.getName());
 		for (Article sarahArticle : articles) {
 			sarahArticle = articleRepository.save(sarahArticle);
 			ArticleOwner articleOwner = new ArticleOwner(new Date(), author, sarahArticle);

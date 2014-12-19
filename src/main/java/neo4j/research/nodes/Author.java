@@ -14,8 +14,8 @@ public class Author {
 
 	@GraphId
 	Long id;
-	public String name;
-	public String surname;
+	private String name;
+	private String surname;
 
 	public Author() {}
 
@@ -35,11 +35,27 @@ public class Author {
 		articles.add(article);
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
 	public String toString() {
 		String results = name + "'s articles include\n";
 		if (articles != null) {
 			for (Article article : articles) {
-				results += "\t- " + article.title + "\n";
+				results += "\t- " + article.getTitle() + "\n";
 			}
 		}
 		return results;

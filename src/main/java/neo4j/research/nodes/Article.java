@@ -14,8 +14,8 @@ public class Article {
 
 	@GraphId
 	Long id;
-	public String title;
-	public int articleId;
+	private String title;
+	private int articleId;
 
 	public Article() {
 	}
@@ -27,8 +27,31 @@ public class Article {
 
 	@RelatedTo(type = "REALATED", direction = Direction.BOTH)
 	@Fetch
-	public Set<Article> relatedArticles;
+	private Set<Article> relatedArticles;
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getArticleId() {
+		return articleId;
+	}
+
+	public void setArticleId(int articleId) {
+		this.articleId = articleId;
+	}
+
+	public Set<Article> getRelatedArticles() {
+		return relatedArticles;
+	}
+
+	public void setRelatedArticles(Set<Article> relatedArticles) {
+		this.relatedArticles = relatedArticles;
+	}
 
 	public void related(Article article) {
 		if (relatedArticles == null) {

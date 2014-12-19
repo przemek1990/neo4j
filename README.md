@@ -1,4 +1,4 @@
-Sample project that accessing Data from Neo4j using Spring Data
+Sample project that show how to access data from Neo4j using Spring Data
 
 *Build an executable JAR*
 
